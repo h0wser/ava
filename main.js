@@ -3,7 +3,7 @@ const config = require('./config');
 const tss = require('./tss');
 const fs = require('fs');
 
-var app = api_ai(config.client_token);
+var app = api_ai(config.apiai_client_token);
 
 
 

@@ -14,7 +14,7 @@ var options = {
     url: endpoint,
     encoding: null,
     headers: {
-	'Authorization': 'Bearer' + config.client_token,
+	'Authorization': 'Bearer' + config.apiai_client_token,
 	'Accept-Language': 'en-US'
     },
     qs: {
