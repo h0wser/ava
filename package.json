@@ -20,6 +20,7 @@
     "api.ai": "^1.0.1",
     "audio-loader": "^0.6.0",
     "audio-play": "^2.0.1",
+    "node-record-lpcm16": "^0.1.4",
     "request": "^2.75.0"
   }
 }
