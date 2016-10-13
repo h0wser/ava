@@ -1,9 +1,11 @@
 // Module for using api.ai's text-to-speech service
 // Downloads wav file and saves it in <config.audio_dir>/output.wav
 
-var request = require('request');
-var config = require('./config');
-var fs = require('fs');
+const request = require('request');
+const config = require('./config');
+const fs = require('fs');
+const play = require('audio-play');
+const load = require('audio-loader');
 
 var endpoint = "https://api.api.ai/v1/tts";
 var v = '20150910';
@@ -25,15 +27,13 @@ var callback = function(error, res, body) {
     if (error) {
 	console.log(error);
     } else {
-	console.log(typeof body);
-	fs.writeFile(config.audio_dir + "output.wav", body, (err) => {
-	    if (err)
-		console.log(err);
-	});
+	fs.writeFileSync(config.audio_dir + "output.wav", body);
+	load(config.audio_dir + "output.wav").then(play);
     }
 }
 
-var getSpeech = function(string) {
+// Gets a string of text and plays the text using api.ai
+var playText = function(string) {
     if (string) {
 	options.qs.text = string;
     } else {
@@ -44,5 +44,5 @@ var getSpeech = function(string) {
 }
 
 module.exports = {
-    getSpeech: getSpeech
+    playText: playText
 };

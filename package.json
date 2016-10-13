@@ -18,6 +18,8 @@
   "homepage": "https://github.com/h0wser/ava#readme",
   "dependencies": {
     "api.ai": "^1.0.1",
+    "audio-loader": "^0.6.0",
+    "audio-play": "^2.0.1",
     "request": "^2.75.0"
   }
 }

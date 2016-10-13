@@ -1,20 +1,10 @@
-var api_ai = require('apiai');
-var config = require('./config');
-var tss = require('./tss');;
+const api_ai = require('apiai');
+const config = require('./config');
+const tss = require('./tss');
+const fs = require('fs');
 
 var app = api_ai(config.client_token);
-/*
-var request = app.textRequest('Im going to bed now');
 
-request.on('response', (res) => {
-    console.log(res);
-});
 
-request.on('error', (err) => {
-    console.log(err);
-});
 
-request.end();
-*/
-
-tss.getSpeech("Hello this is an amazing test")
+tss.playText("Created reminder for you!")
