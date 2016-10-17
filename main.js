@@ -5,22 +5,22 @@ const fs = require('fs');
 const voice = require('./voicerecognition');
 const intent = require('./intent');
 
-//var app = api_ai(config.apiai_client_token);
+intentEmitter = new intent();
 
-//tss.playText("Created reminder for you!")
-
-//voice.start((text) => {console.log(text)});
-
-testIntent = new intent();
-
-testIntent.on('bedtime', () => {
-    console.log("bedtime event");
+intentEmitter.on('bedtime', (entities) => {
+    console.log("bedtime event fired");
 });
 
-testIntent.on('remind', () => {
-    console.log("remind event");
-});
+voice_callback = function(res) {
+    console.log("Query: " + res._text);
+    if (res.entities) {
+	if (res.entities.intent) {
+	    console.log("Intent: " + res.entities.intent[0].value);
+	    intentEmitter.emit(res.entities['intent'][0]['value'], res.entities);
+	}
+    } else {
+	console.log("No entities found");
+    }
+}
 
-testIntent.listIntents();
-testIntent.emit('bedtime');
-testIntent.emit('remind');
+voice.start(voice_callback);
