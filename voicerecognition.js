@@ -3,7 +3,7 @@ const request = require('request');
 const config = require('./config');
 const fs = require('fs'); // for testing
 
-// The callback will receive the text as a parameter
+// The callback will receive the json response as a parameter
 start_voice_recognition = function(callback) {
     record.start().pipe(request.post({
 	url: 'https://api.wit.ai/speech',
@@ -19,7 +19,7 @@ start_voice_recognition = function(callback) {
 	    console.log(err);
 	} else {
 	    if (res.statusCode == 200) {
-		callback(JSON.parse(body)._text);
+		callback(JSON.parse(body));
 	    } else {
 		console.log("Something goofed voice recognition");
 	    }
