@@ -1,5 +1,6 @@
 {
     "apiai_client_token": "<token>",
     "witai_client_token": "<token>",
-    "audio_dir": "/tmp/ava/"
+    "audio_dir": "/tmp/ava/",
+	"hue_user": "",
 }
