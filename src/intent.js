@@ -9,9 +9,9 @@ class intentEmitter extends EventEmitter {
     listIntents() {
 	console.log("Currently handled intents:");
 	var x = this.eventNames();
-	for (var i in x) {
-	    console.log(x[i]);
-	}
+		for (var i in x) {
+			console.log(x[i]);
+		}
     }
 }
 

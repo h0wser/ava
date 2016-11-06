@@ -5,12 +5,18 @@ const fs = require('fs');
 const voice = require('./voicerecognition');
 const intent = require('./intent');
 const request = require('request');
+const lights = require('./lights');
 
 intentEmitter = new intent();
+
+lights.init();
 
 intentEmitter.on('bedtime', (entities) => {
     console.log("bedtime event fired");
 });
+
+intentEmitter.on('on_off', lights.on_off_callback);
+
 
 // For testing
 text_query = function(text, callback) {
@@ -38,13 +44,17 @@ text_query = function(text, callback) {
 voice_callback = function(res) {
     console.log("Query: " + res._text);
     if (res.entities) {
+		console.log("Entities:");
+		console.log(res.entities);
 		if (res.entities.intent) {
 			console.log("Intent: " + res.entities.intent[0].value);
 			intentEmitter.emit(res.entities['intent'][0]['value'], res.entities);
+		} else if (res.entities.on_off) {
+			intentEmitter.emit("on_off", res.entities);
 		}
     } else {
 		console.log("No entities found");
     }
 }
 
-text_query("Set the brightness in the kitchen to 20", voice_callback);
+text_query("Turn on the desk light", voice_callback);
