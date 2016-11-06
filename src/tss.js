@@ -2,7 +2,7 @@
 // Downloads wav file and saves it in <config.audio_dir>/output.wav
 
 const request = require('request');
-const config = require('./config');
+const config = require('../config');
 const fs = require('fs');
 const play = require('audio-play');
 const load = require('audio-loader');

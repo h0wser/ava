@@ -1,6 +1,6 @@
 const record = require('node-record-lpcm16');
 const request = require('request');
-const config = require('./config');
+const config = require('../config');
 const fs = require('fs'); // for testing
 
 // The callback will receive the json response as a parameter

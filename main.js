@@ -1,5 +1,5 @@
 const api_ai = require('apiai');
-const config = require('./config');
+const config = require('../config');
 const tss = require('./tss');
 const fs = require('fs');
 const voice = require('./voicerecognition');
