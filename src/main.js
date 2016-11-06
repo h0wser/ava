@@ -44,8 +44,6 @@ text_query = function(text, callback) {
 voice_callback = function(res) {
     console.log("Query: " + res._text);
     if (res.entities) {
-		console.log("Entities:");
-		console.log(res.entities);
 		if (res.entities.intent) {
 			console.log("Intent: " + res.entities.intent[0].value);
 			intentEmitter.emit(res.entities['intent'][0]['value'], res.entities);
@@ -57,4 +55,6 @@ voice_callback = function(res) {
     }
 }
 
-text_query("Turn on the desk light", voice_callback);
+var xxx = 0;
+while (xxx++ <100000000);
+text_query("Turn on the living room light", voice_callback);

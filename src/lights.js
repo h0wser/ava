@@ -4,13 +4,22 @@ const hue = require('node-hue-api');
 var api = new hue.HueApi();
 
 var bridge_ip;
+var light_map = {};
 
-basic_callback = function(err, res) {
+function basic_callback(err, res) {
 	if (err)
 		console.log(err);
 }
 
-register_user = function() {
+function create_light_mapping(lights) {
+	ls = lights.lights;
+
+	for (i in lights.lights) {
+		light_map[ls[i].name] = ls[i].id;
+	}
+}
+
+function register_user () {
 	api.createUser(bridge_ip, (err, user) => {
 		if (err)
 			console.log("You must press the link button on the bridge before running!");
@@ -22,7 +31,7 @@ register_user = function() {
 	});
 }
 
-init = function() {
+function init() {
 	hue.nupnpSearch((err, result) => {
 		if (err) {
 			throw err;
@@ -37,18 +46,28 @@ init = function() {
 		}
 
 		api = new hue.HueApi(bridge_ip, config.hue_user);
+
 		api.lights((err, result) => {
-			if (err) throw err;
-			console.log(JSON.stringify(result, null, 2));
+			if (err) {
+				throw err;
+			}
+			create_light_mapping(result);
 		});
 	});
 }
 
-on_off_callback = function(entities) {
+function on_off_callback(entities) {
 	var light_state = hue.lightState.create();
-	if (entities.
-	light_state.off();
-	api.setLightState(4, light_state, basic_callback);
+	var id;
+
+	id = light_map[entities.device_group[0].value];
+
+	if (entities.on_off[0].value == 'on')
+		light_state.on();
+	else if (entities.on_off[0].value == 'off')
+		light_state.off();
+
+	api.setLightState(id, light_state, basic_callback);
 }
 
 module.exports = {
