@@ -1,4 +1,3 @@
-const api_ai = require('apiai');
 const config = require('../config');
 const tss = require('./tss');
 const fs = require('fs');
@@ -6,6 +5,7 @@ const voice = require('./voicerecognition');
 const intent = require('./intent');
 const request = require('request');
 const lights = require('./lights');
+const express = require('express');
 
 intentEmitter = new intent();
 
@@ -16,7 +16,6 @@ intentEmitter.on('bedtime', (entities) => {
 });
 
 intentEmitter.on('on_off', lights.on_off_callback);
-
 
 // For testing
 text_query = function(text, callback) {
@@ -41,9 +40,9 @@ text_query = function(text, callback) {
 	});
 };
 
-voice_callback = function(res) {
-    console.log("Query: " + res._text);
-    if (res.entities) {
+callback = function(res) {
+	console.log("Query: " + res._text);
+	if (res.entities) {
 		if (res.entities.intent) {
 			console.log("Intent: " + res.entities.intent[0].value);
 			intentEmitter.emit(res.entities['intent'][0]['value'], res.entities);
@@ -55,6 +54,18 @@ voice_callback = function(res) {
     }
 }
 
-var xxx = 0;
-while (xxx++ <100000000);
-text_query("Turn on the living room light", voice_callback);
+// TODO: break this out and turn it into a real module
+var app = express();
+
+app.get('/', (req, res) => {
+	res.send('Ava status page');
+});
+
+// TODO: basic authentication
+app.post('/trigger', (req, res) => {
+	console.log("Voice trigger");
+	voice.start(callback);
+	res.end();
+});
+
+app.listen(8080, () => {});

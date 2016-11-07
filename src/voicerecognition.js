@@ -15,6 +15,7 @@ start_voice_recognition = function(callback) {
 			v: '20160526'
 		}
     }, (err, res, body) => {
+		console.log("In voice recon request callback");
 		if (err) {
 			console.log(err);
 		} else {
