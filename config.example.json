@@ -3,4 +3,5 @@
     "witai_client_token": "<token>",
     "audio_dir": "/tmp/ava/",
 	"hue_user": "",
+	"trigger_sound": "res/wet.mp3"
 }

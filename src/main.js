@@ -7,6 +7,8 @@ const request = require('request');
 const lights = require('./lights');
 const express = require('express');
 
+const exec = require('child_process').exec;
+
 intentEmitter = new intent();
 
 lights.init();
@@ -64,6 +66,7 @@ app.get('/', (req, res) => {
 // TODO: basic authentication
 app.post('/trigger', (req, res) => {
 	console.log("Voice trigger");
+	exec("play " + config.trigger_sound, (err, stdout, stderr) => {});
 	voice.start(callback);
 	res.end();
 });
