@@ -60,7 +60,12 @@ function on_off_callback(entities) {
 	var light_state = hue.lightState.create();
 	var id;
 
-	id = light_map[entities.device_group[0].value];
+	if (entities.device_group) {
+		id = light_map[entities.device_group[0].value];
+	} else {
+		console.log("No device_group");
+		return;
+	}
 
 	if (entities.on_off[0].value == 'on')
 		light_state.on();
