@@ -58,10 +58,11 @@ function init() {
 
 function on_off_callback(entities) {
 	var light_state = hue.lightState.create();
-	var id;
+	var id = [];
 
 	if (entities.device_group) {
-		id = light_map[entities.device_group[0].value];
+		for (var i in entities.device_group)
+			id[i] = light_map[entities.device_group[i].value];
 	} else {
 		console.log("No device_group");
 		return;
@@ -72,7 +73,8 @@ function on_off_callback(entities) {
 	else if (entities.on_off[0].value == 'off')
 		light_state.off();
 
-	api.setLightState(id, light_state, basic_callback);
+	for (var i in id)
+		api.setLightState(id[i], light_state, basic_callback);
 }
 
 module.exports = {
